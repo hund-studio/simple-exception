@@ -1,0 +1,49 @@
+{
+  "name": "simple-exception",
+  "version": "1.0.0-alpha.2",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "readme": "docs/NPM.md",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hund-studio/simple-exception.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hund-studio/simple-exception/issues"
+  },
+  "homepage": "https://github.com/hund-studio/simple-exception#readme",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "reset": "tsx scripts/reset.ts main",
+    "merge": "tsx scripts/merge.ts internal",
+    "publish:prerelease": "tsx scripts/publish.ts prerelease alpha",
+    "publish:prepatch": "tsx scripts/publish.ts prepatch alpha",
+    "publish:patch": "tsx scripts/publish.ts patch",
+    "publish:preminor": "tsx scripts/publish.ts preminor alpha",
+    "publish:minor": "tsx scripts/publish.ts minor",
+    "publish:premajor": "tsx scripts/publish.ts premajor alpha",
+    "publish:major": "tsx scripts/publish.ts major",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "zod": "^3.25.28"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
