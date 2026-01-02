@@ -4,7 +4,7 @@
   "readme": "docs/NPM.md",
   "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/exports.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
@@ -12,6 +12,9 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hund-studio/simple-exception.git"
