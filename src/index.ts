@@ -1,8 +1,10 @@
-import { formatDate } from "./utils";
-import { SimpleException, SimpleExceptionInput, simpleExceptionInputSchema } from "./schemas";
+import { formatDate } from "./utils.js";
+import { SimpleException, SimpleExceptionInput, simpleExceptionInputSchema } from "./schemas.js";
 import chalk from "chalk";
 
-const createSimpleException = (exceptionInput: SimpleExceptionInput): SimpleException => {
+const createSimpleException = <T = unknown>(
+  exceptionInput: SimpleExceptionInput<T>
+): SimpleException<T> => {
   return {
     ...exceptionInput,
     timestamp: exceptionInput.timestamp instanceof Date ? exceptionInput.timestamp : new Date(),
@@ -14,15 +16,23 @@ const isSimpleException = (data: unknown): data is SimpleExceptionInput => {
   return result.success;
 };
 
-const ensureSimpleException = (
+const ensureSimpleException = <T = unknown>(
   exception: unknown,
-  fallbackExceptionInput?: Partial<SimpleExceptionInput>
-): SimpleException => {
-  if (isSimpleException(exception)) return createSimpleException(exception);
-  return createSimpleException({
+  fallbackExceptionInput?: Partial<SimpleExceptionInput<T>>
+): SimpleException<T> => {
+  if (isSimpleException(exception)) {
+    return createSimpleException<T>(exception as SimpleExceptionInput<T>);
+  }
+
+  return createSimpleException<T>({
     ...{
       code: 500,
-      message: "Unknown error",
+      message:
+        exception instanceof Error
+          ? exception.message
+          : typeof exception === "string"
+          ? exception
+          : "Unknown error",
       type: "error",
     },
     ...fallbackExceptionInput,

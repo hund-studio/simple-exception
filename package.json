@@ -1,10 +1,11 @@
 {
   "name": "simple-exception",
   "version": "1.0.0-alpha.2",
+  "readme": "docs/NPM.md",
   "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/exports.js",
   "types": "./dist/index.d.ts",
-  "readme": "docs/NPM.md",
   "exports": {
     ".": {
       "import": "./dist/index.js",

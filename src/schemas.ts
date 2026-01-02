@@ -1,4 +1,4 @@
-import z, { TypeOf } from "zod";
+import z from "zod";
 
 const simpleExceptionBodySchema = z.object({
   code: z.number(),
@@ -8,12 +8,17 @@ const simpleExceptionBodySchema = z.object({
   type: z.union([z.literal("error"), z.literal("warning"), z.literal("info")]),
 });
 
-type SimpleException = TypeOf<typeof simpleExceptionSchema>;
+type SimpleException<T = unknown> = Omit<z.infer<typeof simpleExceptionSchema>, "details"> & {
+  details?: T;
+};
 const simpleExceptionSchema = simpleExceptionBodySchema.extend({
   timestamp: z.date(),
 });
 
-type SimpleExceptionInput = TypeOf<typeof simpleExceptionInputSchema>;
+type SimpleExceptionInput<T = unknown> = Omit<
+  z.infer<typeof simpleExceptionInputSchema>,
+  "details"
+> & { details?: T };
 const simpleExceptionInputSchema = simpleExceptionBodySchema.extend({
   timestamp: z.date().optional(),
 });
