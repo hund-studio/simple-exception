@@ -20,11 +20,11 @@ const ensureSimpleException = <T = unknown>(
   exception: unknown,
   fallbackExceptionInput?: Partial<SimpleExceptionInput<T>>
 ): SimpleException<T> => {
+  console.log(exception, typeof exception);
+
   if (isSimpleException(exception)) {
     return createSimpleException<T>(exception as SimpleExceptionInput<T>);
   }
-
-  console.log(exception, typeof exception);
 
   const message = (() => {
     if (exception instanceof Error) return exception.message;
