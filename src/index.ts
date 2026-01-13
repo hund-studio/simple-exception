@@ -13,7 +13,6 @@ const createSimpleException = <T = unknown>(
 
 const isSimpleException = (data: unknown): data is SimpleExceptionInput => {
   const result = simpleExceptionInputSchema.safeParse(data);
-  console.log(result);
   return result.success;
 };
 
@@ -24,8 +23,6 @@ const ensureSimpleException = <T = unknown>(
   if (isSimpleException(exception)) {
     return createSimpleException<T>(exception as SimpleExceptionInput<T>);
   }
-
-  console.log(exception, typeof exception);
 
   const message = (() => {
     if (exception instanceof Error) return exception.message;
