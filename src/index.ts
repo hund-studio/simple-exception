@@ -24,6 +24,8 @@ const ensureSimpleException = <T = unknown>(
     return createSimpleException<T>(exception as SimpleExceptionInput<T>);
   }
 
+  console.log(exception, typeof exception);
+
   const message = (() => {
     if (exception instanceof Error) return exception.message;
     if (typeof exception === "string") return exception;
