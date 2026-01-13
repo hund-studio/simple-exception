@@ -24,16 +24,57 @@ const ensureSimpleException = <T = unknown>(
     return createSimpleException<T>(exception as SimpleExceptionInput<T>);
   }
 
+  const message = (() => {
+    if (exception instanceof Error) return exception.message;
+    if (typeof exception === "string") return exception;
+    if (typeof exception === "object") {
+      if (exception) {
+        if ("message" in exception) {
+          if (typeof exception.message === "string") {
+            return exception.message;
+          }
+        }
+      }
+    }
+    return "Unknown error";
+  })();
+
+  const code = (() => {
+    if (typeof exception === "object") {
+      if (exception) {
+        if ("code" in exception) {
+          if (typeof exception.code === "number") {
+            return exception.code;
+          }
+        }
+      }
+    }
+    return 500;
+  })();
+
+  const type = (() => {
+    if (typeof exception === "object") {
+      if (exception) {
+        if ("type" in exception) {
+          if (typeof exception.type === "string") {
+            switch (exception.type) {
+              case "warning":
+              case "info":
+              case "error":
+                return exception.type;
+            }
+          }
+        }
+      }
+    }
+    return "error";
+  })();
+
   return createSimpleException<T>({
     ...{
-      code: 500,
-      message:
-        exception instanceof Error
-          ? exception.message
-          : typeof exception === "string"
-          ? exception
-          : "Unknown error",
-      type: "error",
+      code,
+      message,
+      type,
     },
     ...fallbackExceptionInput,
   });
